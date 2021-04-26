@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import Map from "./Map";
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [events, setEvents] = useState([]);
+	useEffect(() => {
+		axios
+			.get(
+				`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
+			)
+			.then((res) => {
+				const wildfires = res.data.events.filter(
+					(event) => event.categories[0].id === "wildfires"
+				);
+				setEvents(wildfires);
+			});
+	}, []);
+	return (
+		<div className="App">
+			<Map events={events} />
+		</div>
+	);
 }
 
 export default App;
