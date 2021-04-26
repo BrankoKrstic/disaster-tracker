@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Loader from "./Loader";
 import "./App.css";
 import Map from "./Map";
 import axios from "axios";
@@ -22,7 +23,7 @@ function App() {
 	}, []);
 	return (
 		<div className="App">
-			<Map events={events} />
+			{isLoading ? <Loader /> : <Map events={events} />}
 		</div>
 	);
 }
