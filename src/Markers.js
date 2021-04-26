@@ -23,6 +23,7 @@ export default function Markers(props) {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [wrapperRef]);
+
 	return (
 		<div>
 			<Marker
@@ -45,7 +46,10 @@ export default function Markers(props) {
 					onClose={() => togglePopup(false)}
 					anchor="top"
 				>
-					<div ref={wrapperRef}>You are here</div>
+					<div ref={wrapperRef}>
+						<h3>{event.title}</h3>
+						<p> </p>
+					</div>
 				</Popup>
 			)}
 		</div>

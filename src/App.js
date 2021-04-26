@@ -5,7 +5,9 @@ import axios from "axios";
 
 function App() {
 	const [events, setEvents] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
+		setIsLoading(true);
 		axios
 			.get(
 				`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
@@ -15,6 +17,7 @@ function App() {
 					(event) => event.categories[0].id === "wildfires"
 				);
 				setEvents(wildfires);
+				setIsLoading(false);
 			});
 	}, []);
 	return (
