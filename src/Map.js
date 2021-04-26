@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL from "react-map-gl";
 import "./Map.css";
-import WhatshotIcon from "@material-ui/icons/Whatshot";
+import Markers from "./Markers";
 
 export default function Map(props) {
 	const [viewport, setViewport] = useState({
@@ -9,11 +9,6 @@ export default function Map(props) {
 		longitude: -122.4376,
 		zoom: 5,
 	});
-	// use useState to create an EventInfo componenet that takes event data and display set to true/false
-	const displayEventInfo = (i) => {
-		// display event info component and pass relevant data
-		console.log(props.events[i]);
-	};
 	return (
 		<div className="Map">
 			<ReactMapGL
@@ -24,19 +19,9 @@ export default function Map(props) {
 				mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
-				{/* add separate componenets for different events */}
-				{props.events.map((event, i) => (
-					<Marker
-						key={event.id}
-						latitude={event.geometry[0].coordinates[1]}
-						longitude={event.geometry[0].coordinates[0]}
-					>
-						<WhatshotIcon
-							style={{ color: "#d50000", cursor: "pointer" }}
-							fontSize="large"
-							onClick={() => displayEventInfo(i)}
-						/>
-					</Marker>
+				{/* add separate componenets for different events (possibly display different ones based on route) */}
+				{props.events.map((event) => (
+					<Markers event={event} />
 				))}
 			</ReactMapGL>
 		</div>
