@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import WhatshotTwoToneIcon from "@material-ui/icons/WhatshotTwoTone";
+import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { Marker, Popup } from "react-map-gl";
-import "./Markers.css";
+import "./PointEvent.css";
 
-export default function Markers(props) {
+export default function PointEvent(props) {
 	const [showPopup, togglePopup] = useState(false);
 	const { event } = props;
 	const wrapperRef = useRef(null);
@@ -24,7 +25,28 @@ export default function Markers(props) {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [wrapperRef]);
-
+	const displayIcon = () => {
+		if (event.categories[0].id === "wildfires") {
+			return (
+				<WhatshotTwoToneIcon
+					className="Marker"
+					style={{ color: "#d51111", cursor: "pointer" }}
+					fontSize="large"
+					onClick={() => togglePopup(true)}
+				/>
+			);
+		}
+		if (event.categories[0].id === "seaLakeIce") {
+			return (
+				<AcUnitIcon
+					className="Marker"
+					style={{ color: "#35baf6", cursor: "pointer" }}
+					fontSize="medium"
+					onClick={() => togglePopup(true)}
+				/>
+			);
+		}
+	};
 	return (
 		<div>
 			<Marker
@@ -32,12 +54,7 @@ export default function Markers(props) {
 				latitude={event.geometry[0].coordinates[1]}
 				longitude={event.geometry[0].coordinates[0]}
 			>
-				<WhatshotTwoToneIcon
-					className="Marker"
-					style={{ color: "#d51111", cursor: "pointer" }}
-					fontSize="large"
-					onClick={() => togglePopup(true)}
-				/>
+				{displayIcon()}
 			</Marker>
 			{showPopup && (
 				<Popup

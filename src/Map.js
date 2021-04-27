@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactMapGL from "react-map-gl";
 import "./Map.css";
-import Markers from "./Markers";
+import PointEvent from "./PointEvent";
 
 export default function Map(props) {
 	const [viewport, setViewport] = useState({
@@ -22,7 +22,10 @@ export default function Map(props) {
 			>
 				{/* add separate componenets for different events (possibly display different ones based on route) */}
 				{wildfires.map((event) => (
-					<Markers event={event} />
+					<PointEvent event={event} />
+				))}
+				{ice.map((event) => (
+					<PointEvent event={event} />
 				))}
 			</ReactMapGL>
 		</div>
