@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import WhatshotIcon from "@material-ui/icons/Whatshot";
+import WhatshotTwoToneIcon from "@material-ui/icons/WhatshotTwoTone";
 import { Marker, Popup } from "react-map-gl";
+import "./Markers.css";
 
 export default function Markers(props) {
 	const [showPopup, togglePopup] = useState(false);
@@ -31,8 +32,9 @@ export default function Markers(props) {
 				latitude={event.geometry[0].coordinates[1]}
 				longitude={event.geometry[0].coordinates[0]}
 			>
-				<WhatshotIcon
-					style={{ color: "#d50000", cursor: "pointer" }}
+				<WhatshotTwoToneIcon
+					className="Marker"
+					style={{ color: "#d51111", cursor: "pointer" }}
 					fontSize="large"
 					onClick={() => togglePopup(true)}
 				/>
@@ -48,7 +50,6 @@ export default function Markers(props) {
 				>
 					<div ref={wrapperRef}>
 						<h3>{event.title}</h3>
-						<p> </p>
 					</div>
 				</Popup>
 			)}
