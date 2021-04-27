@@ -9,6 +9,7 @@ export default function Map(props) {
 		longitude: -122.4376,
 		zoom: 5,
 	});
+	const { wildfires, ice, storms, volcanoes } = props;
 	return (
 		<div className="Map">
 			<ReactMapGL
@@ -20,7 +21,7 @@ export default function Map(props) {
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
 				{/* add separate componenets for different events (possibly display different ones based on route) */}
-				{props.events.map((event) => (
+				{wildfires.map((event) => (
 					<Markers event={event} />
 				))}
 			</ReactMapGL>
