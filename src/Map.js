@@ -9,7 +9,7 @@ export default function Map(props) {
 		longitude: -122.4376,
 		zoom: 5,
 	});
-	const { wildfires, ice, storms, volcanoes } = props;
+	const { pointEvents, storms } = props;
 	return (
 		<div className="Map">
 			<ReactMapGL
@@ -20,19 +20,9 @@ export default function Map(props) {
 				mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
-				{/* add separate componenets for different events (possibly display different ones based on route) */}
-				{wildfires.map((event) => (
+				{pointEvents.map((event) => (
 					<PointEvent event={event} key={event.properties.id} />
 				))}
-				{ice.map((event) => (
-					<PointEvent event={event} key={event.properties.id} />
-				))}
-				{volcanoes.map((event) => {
-					console.log(event);
-					return (
-						<PointEvent event={event} key={event.properties.id} />
-					);
-				})}
 			</ReactMapGL>
 		</div>
 	);
