@@ -11,34 +11,40 @@ function App() {
 		ice: [],
 		wildfires: [],
 	});
-	const [isLoading, setIsLoading] = useState(false);
+
+	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
-		setIsLoading(true);
-		axios
-			.get(
+		let componentMounted = true;
+		async function getData() {
+			let res = await axios.get(
 				`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
-			)
-			.then((res) => {
-				const wildfires = res.data.events.filter(
-					(event) => event.categories[0].id === "wildfires"
-				);
-				const ice = res.data.events.filter(
-					(event) => event.categories[0].id === "seaLakeIce"
-				);
-				const volcanoes = res.data.events.filter(
-					(event) => event.categories[0].id === "volcanoes"
-				);
-				const storms = res.data.events.filter(
-					(event) => event.categories[0].id === "severeStorms"
-				);
+			);
+			const wildfires = res.data.events.filter(
+				(event) => event.categories[0].id === "wildfires"
+			);
+			const ice = res.data.events.filter(
+				(event) => event.categories[0].id === "seaLakeIce"
+			);
+			const volcanoes = res.data.events.filter(
+				(event) =>
+					event.categories[0].id === "volcanoes" &&
+					typeof event.geometry[0].coordinates[0] === "number"
+			);
+			const storms = res.data.events.filter(
+				(event) => event.categories[0].id === "severeStorms"
+			);
+			if (componentMounted) {
 				setEvents({
 					wildfires: wildfires,
 					ice: ice,
 					volcanoes: volcanoes,
 					storms: storms,
 				});
-				setIsLoading(false);
-			});
+			}
+			setIsLoading(false);
+		}
+		getData();
+		return () => (componentMounted = false);
 	}, []);
 	return (
 		<div className="App">

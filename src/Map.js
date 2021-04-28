@@ -22,11 +22,15 @@ export default function Map(props) {
 			>
 				{/* add separate componenets for different events (possibly display different ones based on route) */}
 				{wildfires.map((event) => (
-					<PointEvent event={event} />
+					<PointEvent event={event} key={event.id} />
 				))}
 				{ice.map((event) => (
-					<PointEvent event={event} />
+					<PointEvent event={event} key={event.id} />
 				))}
+				{volcanoes.map((event) => {
+					console.log(event);
+					return <PointEvent event={event} key={event.id} />;
+				})}
 			</ReactMapGL>
 		</div>
 	);
