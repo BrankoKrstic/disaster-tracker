@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ReactMapGL from "react-map-gl";
 import "./Map.css";
 import PointEvent from "./PointEvent";
@@ -11,6 +11,14 @@ export default function Map(props) {
 		zoom: 5,
 	});
 	const { pointEvents, storms } = props;
+	const pointMarkers = useMemo(
+		//use memo to prevent rerendering all markers whenever moving the map
+		() =>
+			pointEvents.map((event, i) => (
+				<PointEvent event={event} key={event.properties.id + i} />
+			)),
+		[pointEvents]
+	);
 	return (
 		<div className="Map">
 			<ReactMapGL
@@ -21,9 +29,7 @@ export default function Map(props) {
 				mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
-				{pointEvents.map((event, i) => (
-					<PointEvent event={event} key={event.properties.id + i} />
-				))}
+				{pointMarkers}
 				{storms.map((storm) => (
 					<StormLine key={storm.id} event={storm} />
 				))}
