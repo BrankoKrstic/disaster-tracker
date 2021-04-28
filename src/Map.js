@@ -2,11 +2,12 @@ import { useState } from "react";
 import ReactMapGL from "react-map-gl";
 import "./Map.css";
 import PointEvent from "./PointEvent";
+import StormLine from "./StormLine.js";
 
 export default function Map(props) {
 	const [viewport, setViewport] = useState({
-		latitude: 37.7577,
-		longitude: -122.4376,
+		latitude: 37.833818,
+		longitude: -122.483696,
 		zoom: 5,
 	});
 	const { pointEvents, storms } = props;
@@ -22,6 +23,9 @@ export default function Map(props) {
 			>
 				{pointEvents.map((event) => (
 					<PointEvent event={event} key={event.properties.id} />
+				))}
+				{storms.map((storm) => (
+					<StormLine id={storm.id} event={storm} />
 				))}
 			</ReactMapGL>
 		</div>

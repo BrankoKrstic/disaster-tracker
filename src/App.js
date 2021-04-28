@@ -15,15 +15,19 @@ function App() {
 			let res = await axios.get(
 				`https://eonet.sci.gsfc.nasa.gov/api/v3/events/geojson?api_key=${process.env.REACT_APP_NASA_API_KEY}`
 			);
+			let res2 = await axios.get(
+				`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
+			);
 			const pointEvents = res.data.features.filter(
 				(event) =>
 					["wildfires", "seaLakeIce", "volcanoes"].includes(
 						event.properties.categories[0].id
 					) && typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
 			);
-			const storms = res.data.features.filter(
-				(event) => event.properties.categories[0].id === "severeStorms"
+			const storms = res2.data.events.filter(
+				(event) => event.categories[0].id === "severeStorms"
 			);
+			console.log(storms);
 			if (componentMounted) {
 				setEvents({
 					pointEvents: pointEvents,
