@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import WhatshotTwoToneIcon from "@material-ui/icons/WhatshotTwoTone";
+import WhatshotIcon from "@material-ui/icons/Whatshot";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import FilterHdrTwoToneIcon from "@material-ui/icons/FilterHdrTwoTone";
 import { Marker, Popup } from "react-map-gl";
@@ -28,9 +28,9 @@ export default function PointEvent(props) {
 		};
 	}, [wrapperRef]);
 	const displayIcon = () => {
-		if (event.categories[0].id === "wildfires") {
+		if (event.properties.categories[0].id === "wildfires") {
 			return (
-				<WhatshotTwoToneIcon
+				<WhatshotIcon
 					className="Marker"
 					style={{ color: "#d51111", cursor: "pointer" }}
 					fontSize="large"
@@ -38,7 +38,7 @@ export default function PointEvent(props) {
 				/>
 			);
 		}
-		if (event.categories[0].id === "seaLakeIce") {
+		if (event.properties.categories[0].id === "seaLakeIce") {
 			return (
 				<AcUnitIcon
 					className="Marker"
@@ -47,7 +47,7 @@ export default function PointEvent(props) {
 				/>
 			);
 		}
-		if (event.categories[0].id === "volcanoes") {
+		if (event.properties.categories[0].id === "volcanoes") {
 			return (
 				<FilterHdrTwoToneIcon
 					className="Marker"
@@ -58,26 +58,33 @@ export default function PointEvent(props) {
 			);
 		}
 	};
+	const calcCords = (val) => {
+		if (typeof event.geometry.coordinates[0] === "number") {
+			return event.geometry.coordinates[val];
+		} else {
+			return event.geometry.coordinates[0][val];
+		}
+	};
 	return (
 		<div>
 			<Marker
-				key={event.id}
-				latitude={event.geometry[0].coordinates[1]}
-				longitude={event.geometry[0].coordinates[0]}
+				key={event.properties.id}
+				latitude={calcCords(1)}
+				longitude={calcCords(0)}
 			>
 				{displayIcon()}
 			</Marker>
 			{showPopup && (
 				<Popup
-					latitude={event.geometry[0].coordinates[1]}
-					longitude={event.geometry[0].coordinates[0]}
+					latitude={calcCords(1)}
+					longitude={calcCords(1)}
 					closeButton={true}
 					closeOnClick={true}
 					onClose={() => togglePopup(false)}
 					anchor="top"
 				>
 					<div ref={wrapperRef}>
-						<h3>{event.title}</h3>
+						<h3>{event.properties.title}</h3>
 					</div>
 				</Popup>
 			)}

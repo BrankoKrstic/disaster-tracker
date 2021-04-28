@@ -17,21 +17,21 @@ function App() {
 		let componentMounted = true;
 		async function getData() {
 			let res = await axios.get(
-				`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
+				`https://eonet.sci.gsfc.nasa.gov/api/v3/events/geojson?api_key=${process.env.REACT_APP_NASA_API_KEY}`
 			);
-			const wildfires = res.data.events.filter(
-				(event) => event.categories[0].id === "wildfires"
+			const wildfires = res.data.features.filter(
+				(event) => event.properties.categories[0].id === "wildfires"
 			);
-			const ice = res.data.events.filter(
-				(event) => event.categories[0].id === "seaLakeIce"
+			const ice = res.data.features.filter(
+				(event) => event.properties.categories[0].id === "seaLakeIce"
 			);
-			const volcanoes = res.data.events.filter(
+			const volcanoes = res.data.features.filter(
 				(event) =>
-					event.categories[0].id === "volcanoes" &&
-					typeof event.geometry[0].coordinates[0] === "number"
+					event.properties.categories[0].id === "volcanoes" &&
+					typeof event.geometry.coordinates[0] === "number"
 			);
-			const storms = res.data.events.filter(
-				(event) => event.categories[0].id === "severeStorms"
+			const storms = res.data.features.filter(
+				(event) => event.properties.categories[0].id === "severeStorms"
 			);
 			if (componentMounted) {
 				setEvents({
