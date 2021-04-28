@@ -5,14 +5,10 @@ import Map from "./Map";
 import axios from "axios";
 
 function App() {
-	const [events, setEvents] = useState({
-		storms: [],
-		volcanoes: [],
-		ice: [],
-		wildfires: [],
-	});
+	const [events, setEvents] = useState({});
 
 	const [isLoading, setIsLoading] = useState(true);
+	// TODO: move to separate function
 	useEffect(() => {
 		let componentMounted = true;
 		async function getData() {

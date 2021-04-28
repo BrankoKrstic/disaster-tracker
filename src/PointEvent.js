@@ -8,7 +8,6 @@ import "./PointEvent.css";
 export default function PointEvent(props) {
 	const [showPopup, togglePopup] = useState(false);
 	const { event } = props;
-
 	const longitude = calcCoords(event, 1);
 	const latitude = calcCoords(event, 0);
 	return (
