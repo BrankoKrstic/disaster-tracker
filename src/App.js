@@ -27,7 +27,6 @@ function App() {
 			const storms = res2.data.events.filter(
 				(event) => event.categories[0].id === "severeStorms"
 			);
-			console.log(storms);
 			if (componentMounted) {
 				setEvents({
 					pointEvents: pointEvents,

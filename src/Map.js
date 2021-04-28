@@ -21,11 +21,11 @@ export default function Map(props) {
 				mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
-				{pointEvents.map((event) => (
-					<PointEvent event={event} key={event.properties.id} />
+				{pointEvents.map((event, i) => (
+					<PointEvent event={event} key={event.properties.id + i} />
 				))}
 				{storms.map((storm) => (
-					<StormLine id={storm.id} event={storm} />
+					<StormLine key={storm.id} event={storm} />
 				))}
 			</ReactMapGL>
 		</div>

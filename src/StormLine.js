@@ -1,20 +1,5 @@
 import { Source, Layer } from "react-map-gl";
 
-const parkLayer = {
-	id: "line",
-	type: "line",
-	source: "line",
-	layout: {
-		"line-cap": "round",
-		"line-join": "round",
-	},
-	paint: {
-		"line-color": "#8fa",
-		"line-width": 10,
-		"line-opacity": 0.8,
-	},
-};
-
 // const geojson = {
 // 	type: "FeatureCollection",
 // 	features: [
@@ -63,6 +48,20 @@ const parkLayer = {
 export default function StormLine(props) {
 	const { event } = props;
 	const geodata = event.geometry.map((data) => data.coordinates);
+	const parkLayer = {
+		id: event.id,
+		type: "line",
+		source: event.id,
+		layout: {
+			"line-cap": "round",
+			"line-join": "round",
+		},
+		paint: {
+			"line-color": "#8fa",
+			"line-width": 10,
+			"line-opacity": 0.8,
+		},
+	};
 	const geojson = {
 		type: "FeatureCollection",
 		features: [
@@ -84,7 +83,7 @@ export default function StormLine(props) {
 	};
 	return (
 		<div>
-			<Source id="line" type="geojson" data={geojson}>
+			<Source id={event.id} type="geojson" data={geojson}>
 				<Layer {...parkLayer} />
 			</Source>
 		</div>
