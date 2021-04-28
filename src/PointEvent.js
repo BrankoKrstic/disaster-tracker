@@ -1,32 +1,16 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import FilterHdrTwoToneIcon from "@material-ui/icons/FilterHdrTwoTone";
-import { Marker, Popup } from "react-map-gl";
+import { Marker } from "react-map-gl";
+import PopupWindow from "./PopupWindow";
+import calcCoords from "./helpers/calcCoords";
 import "./PointEvent.css";
 
 export default function PointEvent(props) {
 	const [showPopup, togglePopup] = useState(false);
 	const { event } = props;
-	const wrapperRef = useRef(null);
 
-	// close popup when clicked outside to prevent having multiple popups open (TODO: move to a separate function)
-	useEffect(() => {
-		function handleClickOutside(event) {
-			if (
-				wrapperRef.current &&
-				!wrapperRef.current.contains(event.target)
-			) {
-				togglePopup(false);
-			}
-		}
-		// Bind the event listener
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			// Unbind the event listener on clean up
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [wrapperRef]);
 	const displayIcon = () => {
 		if (event.properties.categories[0].id === "wildfires") {
 			return (
@@ -58,35 +42,21 @@ export default function PointEvent(props) {
 			);
 		}
 	};
-	const calcCords = (val) => {
-		if (typeof event.geometry.coordinates[0] === "number") {
-			return event.geometry.coordinates[val];
-		} else {
-			return event.geometry.coordinates[0][val];
-		}
-	};
+
+	const longitude = calcCoords(event, 1);
+	const latitude = calcCoords(event, 0);
 	return (
 		<div>
-			<Marker
-				key={event.properties.id}
-				latitude={calcCords(1)}
-				longitude={calcCords(0)}
-			>
+			<Marker latitude={longitude} longitude={latitude}>
 				{displayIcon()}
 			</Marker>
 			{showPopup && (
-				<Popup
-					latitude={calcCords(1)}
-					longitude={calcCords(1)}
-					closeButton={true}
-					closeOnClick={true}
-					onClose={() => togglePopup(false)}
-					anchor="top"
-				>
-					<div ref={wrapperRef}>
-						<h3>{event.properties.title}</h3>
-					</div>
-				</Popup>
+				<PopupWindow
+					latitude={longitude}
+					longitude={latitude}
+					togglePopup={togglePopup}
+					event={event}
+				/>
 			)}
 		</div>
 	);
