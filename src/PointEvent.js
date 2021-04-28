@@ -51,7 +51,7 @@ export default function PointEvent(props) {
 			return (
 				<FilterHdrTwoToneIcon
 					className="Marker"
-					style={{ color: "#d54444", cursor: "pointer" }}
+					style={{ color: "#d56600", cursor: "pointer" }}
 					fontSize="large"
 					onClick={() => togglePopup(true)}
 				/>
