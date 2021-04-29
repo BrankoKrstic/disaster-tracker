@@ -1,10 +1,14 @@
 .animated-marker {
 	background: #8fa;
-	border-radius: 50%;
-	width: 2rem;
-	height: 2rem;
+	border-radius: 50% 50% 0% 0%;
+	width: 1.5rem;
+	height: 1.5rem;
 	-webkit-animation: pulsing 2s infinite;
 	animation: pulsing 2s infinite;
+	position: absolute;
+	left: 50%;
+	margin-left: -0.75rem;
+	margin-top: -0.75rem;
 }
 
 @-webkit-keyframes pulsing {

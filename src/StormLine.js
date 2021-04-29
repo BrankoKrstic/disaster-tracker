@@ -86,7 +86,7 @@ export default function StormLine(props) {
 			<Source id={event.id} type="geojson" data={geojson}>
 				<Layer {...parkLayer} />
 			</Source>
-			<StormMarker />
+			<StormMarker coordinates={geodata} />
 		</div>
 	);
 }
