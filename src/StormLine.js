@@ -58,7 +58,7 @@ export default function StormLine(props) {
 		},
 		paint: {
 			"line-color": "#8fa",
-			"line-width": 5,
+			"line-width": 2,
 			"line-opacity": 0.8,
 		},
 	};

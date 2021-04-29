@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import NavigationIcon from "@material-ui/icons/Navigation";
 import {
 	lineString,
 	along,
@@ -16,7 +17,7 @@ export default function StormMarker(props) {
 	let bearingDataRef = useRef();
 	useEffect(() => {
 		let arc = [];
-		const steps = 10000;
+		const steps = 5000;
 		let startTime;
 		let timeStep;
 		let point1;
@@ -56,10 +57,12 @@ export default function StormMarker(props) {
 	}, []);
 	return (
 		<Marker longitude={currentLocation[0]} latitude={currentLocation[1]}>
-			<div
-				className="animated-marker"
+			<NavigationIcon
 				style={{ transform: `rotate(${bearingDataRef.current}deg)` }}
-			></div>
+				className="animated-marker"
+				color="primary"
+				fontSize="large"
+			/>
 		</Marker>
 	);
 }
