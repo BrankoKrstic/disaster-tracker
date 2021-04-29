@@ -1,5 +1,5 @@
 import { Source, Layer } from "react-map-gl";
-
+import StormMarker from "./StormMarker";
 // const geojson = {
 // 	type: "FeatureCollection",
 // 	features: [
@@ -86,6 +86,7 @@ export default function StormLine(props) {
 			<Source id={event.id} type="geojson" data={geojson}>
 				<Layer {...parkLayer} />
 			</Source>
+			<StormMarker />
 		</div>
 	);
 }
