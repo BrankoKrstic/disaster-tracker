@@ -17,7 +17,7 @@ export default function StormMarker(props) {
 	let bearingDataRef = useRef();
 	useEffect(() => {
 		let arc = [];
-		const steps = 5000;
+		const steps = 2000;
 		let startTime;
 		let timeStep;
 		let point1;
