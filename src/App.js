@@ -25,18 +25,29 @@ function App() {
 			// let res2 = await axios.get(
 			// 	`https://eonet.sci.gsfc.nasa.gov/api/v3/events?api_key=${process.env.REACT_APP_NASA_API_KEY}`
 			// );
-			const pointEvents = res.data.features.filter(
+			const wildfires = res.data.features.filter(
 				(event) =>
-					["wildfires", "seaLakeIce", "volcanoes"].includes(
-						event.properties.categories[0].id
-					) && typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
+					event.properties.categories[0].id === "wildfires" &&
+					typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
+			);
+			const glaciers = res.data.features.filter(
+				(event) =>
+					event.properties.categories[0].id === "seaLakeIce" &&
+					typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
+			);
+			const volcanoes = res.data.features.filter(
+				(event) =>
+					event.properties.categories[0].id === "volcanoes" &&
+					typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
 			);
 			// const storms = res2.data.events.filter(
 			// 	(event) => event.categories[0].id === "severeStorms"
 			// );
 			if (componentMounted) {
 				setEvents({
-					pointEvents: pointEvents,
+					volcanoes: volcanoes,
+					wildfires: wildfires,
+					glaciers: glaciers,
 					// Using seeded storm data for demonstration purposes.
 					// Uncomment the lines above and change the lne below to "storms: storms" to  pull real data from the NASA API.
 					// Also requires mapping data in StormLine.js to work.
@@ -48,6 +59,7 @@ function App() {
 		getData();
 		return () => (componentMounted = false);
 	}, []);
+
 	return (
 		<div className="App">
 			{isLoading ? (
@@ -58,7 +70,26 @@ function App() {
 						eventsToDisplay={eventsToDisplay}
 						setEventsToDisplay={setEventsToDisplay}
 					/>
-					<Map {...events} />
+					<Map
+						storms={
+							eventsToDisplay.Storms ? events.storms : undefined
+						}
+						volcanoes={
+							eventsToDisplay.Volcanoes
+								? events.volcanoes
+								: undefined
+						}
+						wildfires={
+							eventsToDisplay.Wildfires
+								? events.wildfires
+								: undefined
+						}
+						glaciers={
+							eventsToDisplay.Glaciers
+								? events.glaciers
+								: undefined
+						}
+					/>
 				</>
 			)}
 		</div>

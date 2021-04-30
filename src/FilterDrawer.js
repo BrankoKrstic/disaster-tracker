@@ -51,6 +51,7 @@ export default function FilterDrawer(props) {
 						{["Wildfires", "Volcanoes", "Glaciers", "Storms"].map(
 							(event, i) => (
 								<FormControlLabel
+									key={event + i}
 									control={
 										<Switch
 											checked={eventsToDisplay[event]}

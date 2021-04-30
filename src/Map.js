@@ -10,14 +10,14 @@ export default function Map(props) {
 		longitude: -122.483696,
 		zoom: 5,
 	});
-	const { pointEvents, storms } = props;
+	const { wildfires, volcanoes, glaciers, storms } = props;
 	const pointMarkers = useMemo(
 		//use memo to prevent rerendering all markers whenever moving the map
 		() =>
-			pointEvents.map((event, i) => (
+			[...wildfires, ...glaciers, ...volcanoes].map((event, i) => (
 				<PointEvent event={event} key={event.properties.id + i} />
 			)),
-		[pointEvents]
+		[]
 	);
 	return (
 		<div className="Map">
@@ -30,9 +30,13 @@ export default function Map(props) {
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>
 				{pointMarkers}
-				{storms.map((storm) => (
-					<StormLine key={storm.id} event={storm} />
-				))}
+				{storms &&
+					storms.map((storm) => (
+						<StormLine
+							key={storm.geometry.coordinates[0]}
+							event={storm}
+						/>
+					))}
 			</ReactMapGL>
 		</div>
 	);
