@@ -4,7 +4,8 @@ import StormMarker from "./StormMarker";
 export default function StormLine(props) {
 	const { event } = props;
 	//extract pure coordinates data from the storm event and pass it to Source to draw storm line
-	const geodata = event.geometry.map((data) => data.coordinates);
+	// Current version using seeded data. To use real API data, switch the line below to "const geodata = event.geometry.map((data) => data.coordinates);" and request the api in App.js
+	const geodata = event.geometry.coordinates;
 	const geojson = {
 		type: "FeatureCollection",
 		features: [
