@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import ReactMapGL from "react-map-gl";
 import "./Map.css";
 import PointEvent from "./PointEvent";
-import StormLine from "./StormLine.js";
 import FilterDrawer from "./FilterDrawer";
 import StormMarker from "./StormMarker";
 

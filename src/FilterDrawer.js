@@ -29,6 +29,7 @@ export default function FilterDrawer(props) {
 						top: "1rem",
 						left: "1rem",
 					}}
+					size="large"
 					variant="contained"
 					onClick={() => setDrawerOpen(true)}
 				>

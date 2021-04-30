@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import dummyStormData from "./placeholderData/dummyStormData";
+import dummyStormData from "./seeds/dummyStormData";
 import Loader from "./Loader";
 import "./App.css";
 import Map from "./Map";
