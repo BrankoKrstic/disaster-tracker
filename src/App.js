@@ -8,7 +8,12 @@ import FilterDrawer from "./FilterDrawer";
 
 function App() {
 	const [events, setEvents] = useState({});
-
+	const [eventsToDisplay, setEventsToDisplay] = useState({
+		Storms: true,
+		Glaciers: true,
+		Wildfires: true,
+		Volcanoes: true,
+	});
 	const [isLoading, setIsLoading] = useState(true);
 	// TODO: move to separate function
 	useEffect(() => {
@@ -49,7 +54,10 @@ function App() {
 				<Loader />
 			) : (
 				<>
-					<FilterDrawer />
+					<FilterDrawer
+						eventsToDisplay={eventsToDisplay}
+						setEventsToDisplay={setEventsToDisplay}
+					/>
 					<Map {...events} />
 				</>
 			)}

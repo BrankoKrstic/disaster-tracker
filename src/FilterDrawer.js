@@ -10,8 +10,15 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-export default function FilterDrawer() {
+export default function FilterDrawer(props) {
 	const [drawerOpen, setDrawerOpen] = useState(false);
+	const { eventsToDisplay, setEventsToDisplay } = props;
+	const handleChange = (event) => {
+		setEventsToDisplay({
+			...eventsToDisplay,
+			[event.target.name]: event.target.checked,
+		});
+	};
 	return (
 		<div>
 			{!drawerOpen && (
@@ -41,17 +48,18 @@ export default function FilterDrawer() {
 				<Divider />
 				<FormControl component="fieldset">
 					<FormGroup className="form">
-						{["Wildfires", "Glaciers", "Volcanoes", "Storms"].map(
-							(text, index) => (
+						{["Wildfires", "Volcanoes", "Glaciers", "Storms"].map(
+							(event, i) => (
 								<FormControlLabel
 									control={
 										<Switch
-											checked={true}
+											checked={eventsToDisplay[event]}
 											color="primary"
-											name={text}
+											name={event}
+											onChange={handleChange}
 										/>
 									}
-									label={text}
+									label={event}
 								/>
 							)
 						)}
