@@ -1,0 +1,10 @@
+.drawerHeader {
+	width: 280px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.form {
+	margin: 1rem;
+}

@@ -4,6 +4,7 @@ import Loader from "./Loader";
 import "./App.css";
 import Map from "./Map";
 import axios from "axios";
+import FilterDrawer from "./FilterDrawer";
 
 function App() {
 	const [events, setEvents] = useState({});
@@ -44,7 +45,14 @@ function App() {
 	}, []);
 	return (
 		<div className="App">
-			{isLoading ? <Loader /> : <Map {...events} />}
+			{isLoading ? (
+				<Loader />
+			) : (
+				<>
+					<FilterDrawer />
+					<Map {...events} />
+				</>
+			)}
 		</div>
 	);
 }
