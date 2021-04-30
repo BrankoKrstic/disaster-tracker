@@ -25,13 +25,14 @@ export default function StormMarker(props) {
 
 		const line = lineString(coordinates);
 		const distance = lineDistance(line);
+		// Map out corrdinates for each step animation takes along route. Increase number of steps to make animation slower and smoother.
 		for (let i = 0; i < distance; i += distance / steps) {
 			arc.push(along(line, i).geometry.coordinates);
 		}
 		function animate(timeStamp) {
 			let oldTimeStep = timeStep;
 			timeStep = Math.round(timeStamp - startTime);
-
+			// Make marker turn in the direction of the next step. TODO: move to a separate function.
 			if (arc[oldTimeStep] && arc[timeStep]) {
 				point1 = point(arc[oldTimeStep], {
 					"marker-color": "#F00",
@@ -45,14 +46,17 @@ export default function StormMarker(props) {
 			if (timeStep <= steps) {
 				requestAnimationFrame(animate);
 			} else {
+				// Restart animation when over.
 				startTime = timeStamp;
 				requestAnimationFrame(animate);
 			}
 		}
+		// Execute animation
 		animationRef.current = requestAnimationFrame((timeStamp) => {
 			startTime = timeStamp;
 			animate(timeStamp);
 		});
+		// Stop animation if storm marker gets unmounted.
 		return cancelAnimationFrame(animationRef);
 	}, []);
 	return (

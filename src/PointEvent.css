@@ -2,6 +2,9 @@
 	box-sizing: border-box;
 	border-radius: 50%;
 	padding: 0;
+	position: absolute;
+	top: -17.5px;
+	left: -17.5px;
 }
 
 .Marker:hover {
