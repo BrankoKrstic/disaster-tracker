@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import NavigationIcon from "@material-ui/icons/Navigation";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import {
 	lineString,
 	along,
@@ -17,7 +17,7 @@ export default function StormMarker(props) {
 	let bearingDataRef = useRef();
 	useEffect(() => {
 		let arc = [];
-		const steps = 2000;
+		const steps = 3000;
 		let startTime;
 		let timeStep;
 		let point1;
@@ -58,10 +58,10 @@ export default function StormMarker(props) {
 		});
 		// Stop animation if storm marker gets unmounted.
 		return cancelAnimationFrame(animationRef);
-	}, []);
+	}, [coordinates]);
 	return (
 		<Marker longitude={currentLocation[0]} latitude={currentLocation[1]}>
-			<NavigationIcon
+			<ExpandLessIcon
 				style={{ transform: `rotate(${bearingDataRef.current}deg)` }}
 				className="animated-marker"
 				color="primary"

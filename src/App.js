@@ -4,16 +4,9 @@ import Loader from "./Loader";
 import "./App.css";
 import Map from "./Map";
 import axios from "axios";
-import FilterDrawer from "./FilterDrawer";
 
 function App() {
 	const [events, setEvents] = useState({});
-	const [eventsToDisplay, setEventsToDisplay] = useState({
-		Storms: true,
-		Glaciers: true,
-		Wildfires: true,
-		Volcanoes: true,
-	});
 	const [isLoading, setIsLoading] = useState(true);
 	// TODO: move to separate function
 	useEffect(() => {
@@ -50,7 +43,7 @@ function App() {
 					glaciers: glaciers,
 					// Using seeded storm data for demonstration purposes.
 					// Uncomment the lines above and change the lne below to "storms: storms" to  pull real data from the NASA API.
-					// Also requires mapping data in StormLine.js to work.
+					// Also requires mapping data correctly in Map.js to work with the API.
 					storms: dummyStormData.features,
 				});
 			}
@@ -62,36 +55,7 @@ function App() {
 
 	return (
 		<div className="App">
-			{isLoading ? (
-				<Loader />
-			) : (
-				<>
-					<FilterDrawer
-						eventsToDisplay={eventsToDisplay}
-						setEventsToDisplay={setEventsToDisplay}
-					/>
-					<Map
-						storms={
-							eventsToDisplay.Storms ? events.storms : undefined
-						}
-						volcanoes={
-							eventsToDisplay.Volcanoes
-								? events.volcanoes
-								: undefined
-						}
-						wildfires={
-							eventsToDisplay.Wildfires
-								? events.wildfires
-								: undefined
-						}
-						glaciers={
-							eventsToDisplay.Glaciers
-								? events.glaciers
-								: undefined
-						}
-					/>
-				</>
-			)}
+			{isLoading ? <Loader /> : <Map {...events} />}
 		</div>
 	);
 }

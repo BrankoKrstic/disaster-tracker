@@ -20,7 +20,7 @@ export default function PopupWindow(props) {
 			// Unbind the event listener on clean up
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, [wrapperRef]);
+	}, [wrapperRef, togglePopup]);
 	return (
 		<div>
 			<Popup
