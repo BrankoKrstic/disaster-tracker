@@ -46,10 +46,12 @@ export default function StormMarker(props) {
 	return (
 		<Marker longitude={currentLocation[0]} latitude={currentLocation[1]}>
 			<ExpandLessIcon
-				style={{ transform: `rotate(${bearingDataRef.current}deg)` }}
+				style={{
+					transform: `rotate(${bearingDataRef.current}deg)`,
+					fontSize: "3.5rem",
+				}}
 				className="animated-marker"
 				color="primary"
-				fontSize="large"
 			/>
 		</Marker>
 	);

@@ -71,8 +71,10 @@ export default function Legend() {
 						<ListItemIcon>
 							<ExpandLessIcon
 								color="primary"
-								fontSize="large"
-								style={{ transform: "rotate(90deg)" }}
+								style={{
+									transform: "rotate(90deg)",
+									fontSize: "3rem",
+								}}
 							/>
 						</ListItemIcon>
 						<ListItemText primary="Storms" />
