@@ -6,42 +6,31 @@ import FilterDrawer from "./FilterDrawer";
 import StormMarker from "./StormMarker";
 
 export default function Map(props) {
+	// configs for filtering events by type
 	const [eventsToDisplay, setEventsToDisplay] = useState({
 		Storms: true,
 		Glaciers: true,
 		Wildfires: true,
 		Volcanoes: true,
 	});
+	// configure map starting point
 	const [viewport, setViewport] = useState({
 		latitude: 37.833818,
 		longitude: -122.483696,
 		zoom: 5,
 	});
 	const { wildfires, volcanoes, glaciers, storms } = props;
+	const createMarkers = (eventType) =>
+		eventType.map((e, i) => (
+			<PointEvent event={e} key={e.properties.id + i} />
+		));
 	const wildfireMarkers = useMemo(
-		//use memo to prevent rerendering all markers whenever moving the map
-		() =>
-			wildfires.map((event, i) => (
-				<PointEvent event={event} key={event.properties.id + i} />
-			)),
+		//useMemo to prevent rerendering all markers whenever moving the map
+		() => createMarkers(wildfires),
 		[wildfires]
 	);
-	const glacierMarkers = useMemo(
-		//use memo to prevent rerendering all markers whenever moving the map
-		() =>
-			glaciers.map((event, i) => (
-				<PointEvent event={event} key={event.properties.id + i} />
-			)),
-		[glaciers]
-	);
-	const volcanoMarkers = useMemo(
-		//use memo to prevent rerendering all markers whenever moving the map
-		() =>
-			volcanoes.map((event, i) => (
-				<PointEvent event={event} key={event.properties.id + i} />
-			)),
-		[volcanoes]
-	);
+	const glacierMarkers = useMemo(() => createMarkers(glaciers), [glaciers]);
+	const volcanoMarkers = useMemo(() => createMarkers(volcanoes), [volcanoes]);
 	return (
 		<div className="Map">
 			<FilterDrawer
