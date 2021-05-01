@@ -4,6 +4,7 @@ import "./Map.css";
 import PointEvent from "./PointEvent";
 import FilterDrawer from "./FilterDrawer";
 import StormMarker from "./StormMarker";
+import Legend from "./Legend";
 
 export default function Map(props) {
 	// configs for filtering events by type
@@ -37,6 +38,7 @@ export default function Map(props) {
 				eventsToDisplay={eventsToDisplay}
 				setEventsToDisplay={setEventsToDisplay}
 			/>
+			<Legend />
 			<ReactMapGL
 				{...viewport}
 				width="100%"
