@@ -17,7 +17,7 @@ export default function Legend() {
 			<Button
 				style={{
 					position: "absolute",
-					zIndex: 10,
+					zIndex: 50,
 					top: "1rem",
 					right: "1rem",
 				}}

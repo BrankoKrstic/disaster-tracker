@@ -25,7 +25,7 @@ export default function FilterDrawer(props) {
 				<Button
 					style={{
 						position: "absolute",
-						zIndex: 10,
+						zIndex: 50,
 						top: "1rem",
 						left: "1rem",
 					}}

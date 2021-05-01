@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Popup } from "react-map-gl";
+import "./PopupWindow.css";
 
 export default function PopupWindow(props) {
 	const { event, longitude, latitude, togglePopup } = props;
@@ -24,6 +25,7 @@ export default function PopupWindow(props) {
 	return (
 		<div>
 			<Popup
+				className="popup"
 				latitude={latitude}
 				longitude={longitude}
 				closeOnClick={true}
