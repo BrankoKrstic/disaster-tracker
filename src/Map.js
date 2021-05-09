@@ -21,10 +21,14 @@ export default function Map(props) {
 		zoom: 5,
 	});
 	const { wildfires, volcanoes, glaciers, storms } = props;
-	const createMarkers = (eventType) =>
-		eventType.map((e, i) => (
-			<PointEvent event={e} key={e.properties.id + i} />
-		));
+	const createMarkers = (eventType) => {
+		if (eventType) {
+			return eventType.map((e, i) => (
+				<PointEvent event={e} key={e.properties.id + i} />
+			));
+		}
+		return null;
+	};
 	const wildfireMarkers = useMemo(
 		//useMemo to prevent rerendering all markers whenever moving the map
 		() => createMarkers(wildfires),
@@ -51,6 +55,7 @@ export default function Map(props) {
 				{eventsToDisplay.Volcanoes && volcanoMarkers}
 				{eventsToDisplay.Glaciers && glacierMarkers}
 				{eventsToDisplay.Storms &&
+					storms &&
 					storms.map((storm) => (
 						//extract pure coordinates data from the storm event and pass it to Source to draw storm line
 						// Current version using seeded data. To use real API data, run a function to get "const geodata = event.geometry.map((data) => data.coordinates);" and request the real API in App.js
