@@ -5,6 +5,7 @@ import "./App.css";
 import Map from "./Map";
 import axios from "./request-rules/axios-instance";
 import ErrorModal from "./request-rules/ErrorModal";
+import findPointEvents from "./helpers/findPointEvents";
 
 function App(props) {
 	const [events, setEvents] = useState({});
@@ -12,33 +13,16 @@ function App(props) {
 		isLoading: true,
 		error: null,
 	});
-	// TODO: move to separate function
 	useEffect(() => {
 		let componentMounted = true;
 		axios
 			.get(`/geojson?api_key=${process.env.REACT_APP_NASA_API_KEY}`)
 			.then((res) => {
-				// let res2 = await axios.get(
-				// 	`?api_key=${process.env.REACT_APP_NASA_API_KEY}`
-				// );
-				const wildfires = res.data.features.filter(
-					(event) =>
-						event.properties.categories[0].id === "wildfires" &&
-						typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
-				);
-				const glaciers = res.data.features.filter(
-					(event) =>
-						event.properties.categories[0].id === "seaLakeIce" &&
-						typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
-				);
-				const volcanoes = res.data.features.filter(
-					(event) =>
-						event.properties.categories[0].id === "volcanoes" &&
-						typeof event.geometry.coordinates[0] === "number" //only represent point events with icons
-				);
-				// const storms = res2.data.events.filter(
-				// 	(event) => event.categories[0].id === "severeStorms"
-				// );
+				// let res2 = await axios.get(`?api_key=${process.env.REACT_APP_NASA_API_KEY}`);
+				const wildfires = findPointEvents(res, "wildfires");
+				const glaciers = findPointEvents(res, "seaLakeIce");
+				const volcanoes = findPointEvents(res, "volcanoes");
+				// const storms = res2.data.events.filter((event) => event.categories[0].id === "severeStorms");
 				if (componentMounted) {
 					setEvents({
 						volcanoes: volcanoes,

@@ -5,8 +5,8 @@ import "./PopupWindow.css";
 export default function PopupWindow(props) {
 	const { event, longitude, latitude, togglePopup } = props;
 	const wrapperRef = useRef(null);
-	// close popup when clicked outside to prevent having multiple popups open (TODO: move to a separate function)
 	useEffect(() => {
+		// Listen to clicks outside the popup and close it to prevent having multiple popups open simultaneously
 		function handleClickOutside(event) {
 			if (
 				wrapperRef.current &&
@@ -15,10 +15,8 @@ export default function PopupWindow(props) {
 				togglePopup(false);
 			}
 		}
-		// Bind the event listener
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
-			// Unbind the event listener on clean up
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [wrapperRef, togglePopup]);
