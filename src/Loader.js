@@ -3,9 +3,7 @@ import "./Loader.css";
 export default function Loader() {
 	return (
 		<div className="Loader">
-			<div className="heading">
-				Stand by, Searching for Natural Events
-			</div>
+			<div className="heading">Stand by, Searching for Events</div>
 			<div className="spinner-box">
 				<div className="configure-border-1">
 					<div className="configure-core"></div>
